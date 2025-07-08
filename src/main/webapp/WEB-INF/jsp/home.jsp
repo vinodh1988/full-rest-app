@@ -17,7 +17,11 @@
   %>
   <li><%=name %></li>
   <% } %>
-  
+
 </ul>
+  <h3>Scoped variables</h3>
+  <hr/>
+  <h5>Application Scope: <%=request.getAttribute("adata") %></h5>
+  <h5>Session Scope: <%=request.getAttribute("sdata") %></h5>
 </body>
 </html>
