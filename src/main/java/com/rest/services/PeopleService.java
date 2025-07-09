@@ -26,4 +26,9 @@ public class PeopleService {
   public List<Person> getPeople() {
 	return people;
   }
+  
+  public Person addPerson(Person person) {
+	people.add(person);
+	return person; // Return the added person
+  }
 }
