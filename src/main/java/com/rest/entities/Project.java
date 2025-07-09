@@ -49,5 +49,7 @@ public void setTeamsize(Integer teamSize) {
 	this.teamsize = teamSize;
 }
 
-
+public String toString() {
+	return "Project [pno=" + pno + ", name=" + name + ", technology=" + technology + ", teamsize=" + teamsize + "]";
+}
 }

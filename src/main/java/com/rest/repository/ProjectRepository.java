@@ -6,4 +6,5 @@ import com.rest.entities.Project;
 
 public interface ProjectRepository extends JpaRepository<Project, Integer> {
 
+	public Project findByPno(Integer pno);
 }
