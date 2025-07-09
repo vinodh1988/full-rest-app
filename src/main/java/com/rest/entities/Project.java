@@ -10,11 +10,11 @@ import jakarta.persistence.Table;
 public class Project {
 @Id
 private Integer pno;
-@Column
+@Column(nullable = false, length = 50)
 private String name;
-@Column
+@Column(nullable = false, length = 30)
 private String technology;
-@Column
+@Column(nullable = false)
 private Integer teamsize;
 
 public Project() {}

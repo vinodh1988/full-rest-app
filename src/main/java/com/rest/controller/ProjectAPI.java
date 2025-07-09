@@ -27,17 +27,11 @@ public class ProjectAPI {
 	}
 
 	@PostMapping("")
-	public ResponseEntity<Object> addProject(@RequestBody Project project) {
-		try {
-			System.out.println("Adding project: " + project);
+	public ResponseEntity<Object> addProject(@RequestBody Project project) throws RecordAlreadyExistsException {
+	
 			projectService.addProject(project);
-			return new ResponseEntity(project,HttpStatus.CREATED); // Return the added project
-		} catch (RecordAlreadyExistsException e) {
-			// Handle the exception as needed, e.g., log it or return an error response
-			e.printStackTrace();
-			return ResponseEntity.status(400).body(e.getMessage()); // Conflict status for already existing record
-		}
-		// Return the updated list of projects
+			return new ResponseEntity<>(project,HttpStatus.CREATED); // Return the added project
+		
 	}
 	
 }
