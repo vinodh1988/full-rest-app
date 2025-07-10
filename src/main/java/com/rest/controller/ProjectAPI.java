@@ -20,8 +20,14 @@ import com.rest.services.ProjectService;
 import com.rest.utilities.RecordAlreadyExistsException;
 import com.rest.utilities.RecordNotFoundException;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
 @RestController
 @RequestMapping("/api/projects")
+@Tag(name = "Project API", description="All the operations of Project entity")
 public class ProjectAPI {
 	@Autowired
 	private ProjectService projectService;
@@ -45,6 +51,17 @@ public class ProjectAPI {
 			return projectService.getProjectsBySize(min, Integer.MAX_VALUE);
 		}
 	}
+	@Operation(
+			   summary="Get project by pno",
+			   description="Get Project by passing pno "
+			)
+			@ApiResponses(
+				 value = {
+						 @ApiResponse(responseCode="200", description=":Project found with given pno"),
+						 @ApiResponse(responseCode="400", description="if No Project exists with given pno"),
+						 @ApiResponse(responseCode="500", description="Server related error")
+				 }	
+				)
 	@GetMapping("/{pno}")
 	public ResponseEntity<Project> getProjectByPno(@PathVariable Integer pno) throws RecordNotFoundException {
 		return ResponseEntity.ok (projectService.getProjectByPno(pno));
