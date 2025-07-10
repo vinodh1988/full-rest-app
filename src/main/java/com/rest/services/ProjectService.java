@@ -43,6 +43,16 @@ public class ProjectService {
   			project.setTeamsize(project.getTeamsize()==null ? p.getTeamsize() : project.getTeamsize());
   				projectRepository.save(project);
   		}
+  		public void deleteProject(Integer pno) throws RecordNotFoundException {
+  			    Project p = projectRepository.findByPno(pno);
+  			    if(p == null) {
+  			        throw new RecordNotFoundException();
+  			    }
+  				projectRepository.delete(p);
+  		}
+  		public List<Project> getProjectsBySize(Integer min, Integer max) {
+  				return projectRepository.findBySize(min, max);
+  		}
 }
 /*
  * the save method of the JpaRepository works for both insert and update operations.

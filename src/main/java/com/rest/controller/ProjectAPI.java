@@ -5,12 +5,14 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rest.entities.Project;
@@ -25,8 +27,23 @@ public class ProjectAPI {
 	private ProjectService projectService;
 	
 	@GetMapping("")
-	public List<Project> getProjects() {
-		return projectService.getProjects();
+	public List<Project> getProjects
+	(@RequestParam(required = false) Integer min, @RequestParam(required = false) Integer max) 
+	
+	{
+		if (min != null && max != null) {
+			return projectService.getProjectsBySize(min, max);
+		}
+		else if(min==null && max==null)
+		{ 
+			return projectService.getProjects();
+		}
+		else if(min==null) {
+			return projectService.getProjectsBySize(0, max);
+		}
+		else {
+			return projectService.getProjectsBySize(min, Integer.MAX_VALUE);
+		}
 	}
 	@GetMapping("/{pno}")
 	public ResponseEntity<Project> getProjectByPno(@PathVariable Integer pno) throws RecordNotFoundException {
@@ -46,4 +63,11 @@ public class ProjectAPI {
 		projectService.updateProject(project);
 		return new ResponseEntity<>(project,HttpStatus.OK); // Return the updated project
 	}
+	
+	@DeleteMapping("/{pno}")
+	public ResponseEntity<Object> deleteProjectByPno(@PathVariable Integer pno) throws RecordNotFoundException {
+		projectService.deleteProject(pno);
+		return new ResponseEntity<>("Successfully deleted",HttpStatus.NO_CONTENT); // Return 204 No Content
+	}
+	
 }
