@@ -14,12 +14,6 @@ import org.springframework.stereotype.Service;
 import com.rest.entities.User;
 import com.rest.repository.UserRepository;
 
-
-
-
-
-
-
 @Service
 public class UserService implements UserDetailsService {
 @Autowired
